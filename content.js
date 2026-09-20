@@ -81,6 +81,22 @@
     location.assign(url);
   }
 
+  function parseTargetComicNumber(input) {
+    if (input === null) return null;
+
+    const trimmed = input.trim();
+    if (!/^\d+$/.test(trimmed)) return null;
+
+    return Math.max(1, Number(trimmed));
+  }
+
+  function goToComic() {
+    const n = parseTargetComicNumber(window.prompt("Go to comic #:"));
+    if (n === null) return;
+
+    go(`https://xkcd.com/${n}/`);
+  }
+
   function toggleTitle() {
     const existing = document.getElementById(TITLE_ID);
     if (existing) {
@@ -205,9 +221,13 @@
       text: "← Previous"
     });
 
-    const numberBadge = document.createElement("span");
+    const numberBadge = createToolbarButton({
+      title: "Go to comic (G)",
+      ariaLabel: "Go to comic number",
+      text: `#${n}`,
+      onClick: goToComic
+    });
     numberBadge.className = "xkcd-number";
-    numberBadge.textContent = `#${n}`;
 
     const nextLink = createToolbarLink({
       href: `https://xkcd.com/${next}/`,
@@ -318,6 +338,12 @@
           event.preventDefault();
           toggleTitle();
           break;
+
+        case "g":
+        case "G":
+          event.preventDefault();
+          goToComic();
+          break;
       }
     });
   }
@@ -345,6 +371,8 @@
       comicTitle,
       slugify,
       downloadComic,
+      parseTargetComicNumber,
+      goToComic,
       toggleTitle,
       createPanel,
       installKeyboardNavigation,

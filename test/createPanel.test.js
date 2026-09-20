@@ -19,7 +19,9 @@ describe("createPanel", () => {
     expect(links[2].target).toBe("_blank");
     expect(links[2].rel).toBe("noopener");
 
-    expect(panel.querySelector(".xkcd-number").textContent).toBe("#353");
+    const numberBadge = panel.querySelector(".xkcd-number");
+    expect(numberBadge.textContent).toBe("#353");
+    expect(numberBadge.tagName).toBe("BUTTON");
   });
 
   test("clamps the previous link at comic 1", () => {

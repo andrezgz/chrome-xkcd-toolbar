@@ -9,6 +9,7 @@ Chrome extension for xkcd.com.
 - Toggle the comic's hover-text title below the image
 - Open the Explain XKCD page
 - Download the comic image with format `xkcd-NUMBER-COMIC-TITLE.EXT`
+- Jump to any comic number (click the comic number in the panel, or press G)
 
 ### Keyboard shortcuts
 
@@ -19,6 +20,7 @@ Chrome extension for xkcd.com.
 - T: Toggle comic title
 - E: Explain XKCD
 - D: Download comic
+- G: Go to comic number
 
 ## Install
 
