@@ -6,13 +6,21 @@
   const TITLE_ID = "xkcd-toolbar-title";
   const KEY_HANDLER_FLAG = "__xkcdToolbarKeyHandler";
 
+  function isXkcdComicUrl(href) {
+    return /^https:\/\/(www\.)?xkcd\.com\/\d+\/?$/.test(href);
+  }
+
   function isXkcdComicPage() {
-    return /^https:\/\/(www\.)?xkcd\.com\/\d+\/?$/.test(location.href);
+    return isXkcdComicUrl(location.href);
+  }
+
+  function parseComicNumber(pathname) {
+    const match = pathname.match(/^\/(\d+)\/?$/);
+    return match ? Number(match[1]) : null;
   }
 
   function comicNumber() {
-    const match = location.pathname.match(/^\/(\d+)\/?$/);
-    return match ? Number(match[1]) : null;
+    return parseComicNumber(location.pathname);
   }
 
   function comicImage() {
@@ -20,13 +28,16 @@
     return document.querySelector("#comic img");
   }
 
-  function comicTitle() {
-    const img = comicImage();
+  function extractTitle(img) {
     if (!img) return null;
 
     // XKCD stores the comic's title (the hover-text joke) in the title
     // attribute. Fall back to alt if it's ever missing.
     return (img.getAttribute("title") || img.getAttribute("alt") || "").trim();
+  }
+
+  function comicTitle() {
+    return extractTitle(comicImage());
   }
 
   function slugify(text) {
