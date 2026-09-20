@@ -133,7 +133,6 @@
         color: #000;
         border: 2px solid #000;
         box-shadow: 2px 2px 8px rgba(0,0,0,.35);
-        font: 14px/1.2 Arial, sans-serif;
       }
 
       #${PANEL_ID} a,
@@ -165,7 +164,7 @@
 
       #${TITLE_ID} {
         margin-top: 10px;
-        font: italic 14px/1.4 Arial, sans-serif;
+        font: italic 14px/1.4 Lucida, Helvetica, sans-serif;
         color: #333;
         text-align: center;
       }
@@ -218,7 +217,7 @@
     const previousLink = createToolbarLink({
       href: `https://xkcd.com/${previous}/`,
       title: "Previous comic (←)",
-      text: "← Previous"
+      text: "Prev"
     });
 
     const numberBadge = createToolbarButton({
@@ -232,7 +231,7 @@
     const nextLink = createToolbarLink({
       href: `https://xkcd.com/${next}/`,
       title: "Next comic (→)",
-      text: "Next →"
+      text: "Next"
     });
 
     const explainLink = createToolbarLink({
