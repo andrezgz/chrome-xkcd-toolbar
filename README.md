@@ -6,12 +6,19 @@ Chrome extension for xkcd.com.
 
 - Automatically runs on XKCD comic pages
 - Previous / Next navigation
-- Left / Right arrow keyboard navigation
-- Home -> XKCD #1
-- End -> latest XKCD
-- E -> open the Explain XKCD page
-- D -> download the comic image with format `xkcd-NUMBER-COMIC-TITLE.png`
-- T -> toggle the comic's hover-text title below the image
+- Toggle the comic's hover-text title below the image
+- Open the Explain XKCD page
+- Download the comic image with format `xkcd-NUMBER-COMIC-TITLE.EXT`
+
+### Keyboard shortcuts
+
+- Left Arrow: previous comic
+- Right Arrow: next comic
+- Home: first comic
+- End: latest comic
+- T: Toggle comic title
+- E: Explain XKCD
+- D: Download comic
 
 ## Install
 
@@ -22,16 +29,6 @@ Chrome extension for xkcd.com.
 5. Select the extracted `xkcd-toolbar` folder.
 
 No build step or dependencies are required.
-
-## Keys
-
-- Left Arrow: previous comic
-- Right Arrow: next comic
-- Home: first comic
-- End: latest comic
-- E: Explain XKCD
-- D: Download comic
-- T: Toggle comic title
 
 ## Development
 
