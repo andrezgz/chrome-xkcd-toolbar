@@ -322,5 +322,23 @@
     installKeyboardNavigation();
   }
 
+  if (typeof module !== "undefined" && module.exports) {
+    module.exports = {
+      isXkcdComicUrl,
+      isXkcdComicPage,
+      parseComicNumber,
+      comicNumber,
+      comicImage,
+      extractTitle,
+      comicTitle,
+      slugify,
+      downloadComic,
+      toggleTitle,
+      createPanel,
+      installKeyboardNavigation,
+      init
+    };
+  }
+
   init();
 })();
