@@ -5,17 +5,17 @@ describe("extractTitle", () => {
     expect(extractTitle(null)).toBeNull();
   });
 
-  test("prefers the title attribute over alt", () => {
+  test("returns the title attribute (the hover text)", () => {
     const img = document.createElement("img");
     img.setAttribute("title", "the hover text");
     img.setAttribute("alt", "the alt text");
     expect(extractTitle(img)).toBe("the hover text");
   });
 
-  test("falls back to alt when title is missing", () => {
+  test("does not fall back to alt when title is missing", () => {
     const img = document.createElement("img");
     img.setAttribute("alt", "the alt text");
-    expect(extractTitle(img)).toBe("the alt text");
+    expect(extractTitle(img)).toBe("");
   });
 
   test("trims whitespace", () => {
@@ -24,7 +24,7 @@ describe("extractTitle", () => {
     expect(extractTitle(img)).toBe("padded");
   });
 
-  test("returns an empty string when neither attribute is present", () => {
+  test("returns an empty string when the title attribute is missing", () => {
     const img = document.createElement("img");
     expect(extractTitle(img)).toBe("");
   });

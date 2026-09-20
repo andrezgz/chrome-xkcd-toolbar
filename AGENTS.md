@@ -37,7 +37,11 @@ Two independent scripts, wired together only through `chrome.runtime` messaging 
 
 ### Pure-core / thin-wrapper pattern
 
-Functions that touch global state (`location`, `document`) are split into a pure core (takes the value as an argument, easy to unit test) plus a thin wrapper (reads the global and calls the core): `isXkcdComicUrl(href)` / `isXkcdComicPage()`, `parseComicNumber(pathname)` / `comicNumber()`, `extractTitle(img)` / `comicTitle()`. Follow this pattern for new logic that needs `location` or `document` — it's what makes the logic testable without fighting jsdom.
+Functions that touch global state (`location`, `document`) are split into a pure core (takes the value as an argument, easy to unit test) plus a thin wrapper (reads the global and calls the core): `isXkcdComicUrl(href)` / `isXkcdComicPage()`, `parseComicNumber(pathname)` / `comicNumber()`, `extractTitle(img)` / `comicTitle()`, `extractComicName(heading, img)` / `comicName()`. Follow this pattern for new logic that needs `location` or `document` — it's what makes the logic testable without fighting jsdom.
+
+### Comic name vs. hover text
+
+Two different strings are easy to confuse. The **comic name** (e.g. "Python") is the `#ctitle` heading, with the `<img>`'s `alt` as fallback — `comicName()` returns it and only the download filename uses it. The **hover text** is the `<img>`'s `title` attribute (the joke) — the `T` toggle shows it, and it's what `extractTitle()`/`comicTitle()` return despite their names.
 
 ### Panel construction
 

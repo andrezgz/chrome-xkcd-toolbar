@@ -39,16 +39,30 @@
     return document.querySelector("#comic img");
   }
 
+  // Not to be confused with the comic's name (see extractComicName): the
+  // image's title attribute holds the hover-text joke.
   function extractTitle(img) {
     if (!img) return null;
 
-    // XKCD stores the comic's title (the hover-text joke) in the title
-    // attribute. Fall back to alt if it's ever missing.
-    return (img.getAttribute("title") || img.getAttribute("alt") || "").trim();
+    return (img.getAttribute("title") || "").trim();
   }
 
   function comicTitle() {
     return extractTitle(comicImage());
+  }
+
+  // The comic's name (e.g. "Python") is the #ctitle heading above the comic;
+  // the image's alt attribute repeats it and serves as a fallback. Never the
+  // image's title attribute, which is the hover text.
+  function extractComicName(heading, img) {
+    const fromHeading = (heading?.textContent || "").trim();
+    if (fromHeading) return fromHeading;
+
+    return (img?.getAttribute("alt") || "").trim();
+  }
+
+  function comicName() {
+    return extractComicName(document.getElementById("ctitle"), comicImage());
   }
 
   function slugify(text) {
@@ -66,8 +80,7 @@
 
     if (n === null || !img) return;
 
-    const title = comicTitle() || "comic";
-    const slug = slugify(title) || "comic";
+    const slug = slugify(comicName()) || "comic";
     const filename = `xkcd-${n}-${slug}`;
 
     chrome.runtime.sendMessage({
@@ -368,6 +381,8 @@
       comicImage,
       extractTitle,
       comicTitle,
+      extractComicName,
+      comicName,
       slugify,
       downloadComic,
       parseTargetComicNumber,
