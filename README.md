@@ -11,6 +11,7 @@ Chrome extension for xkcd.com.
 - End -> latest XKCD
 - E -> open the Explain XKCD page
 - D -> download the comic image with format `xkcd-NUMBER-COMIC-TITLE.png`
+- T -> toggle the comic's hover-text title below the image
 
 ## Install
 
@@ -30,3 +31,12 @@ No build step or dependencies are required.
 - End: latest comic
 - E: Explain XKCD
 - D: Download comic
+- T: Toggle comic title
+
+## Development
+
+```sh
+npm install
+npm run lint
+npm test
+```
