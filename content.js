@@ -154,6 +154,16 @@
     return link;
   }
 
+  function createToolbarButton({ title, ariaLabel, text, onClick }) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.title = title;
+    button.setAttribute("aria-label", ariaLabel);
+    button.textContent = text;
+    button.addEventListener("click", onClick);
+    return button;
+  }
+
   function createPanel(n) {
     document.getElementById(PANEL_ID)?.remove();
 
@@ -190,19 +200,19 @@
       external: true
     });
 
-    const titleButton = document.createElement("button");
-    titleButton.type = "button";
-    titleButton.title = "Toggle comic title (T)";
-    titleButton.setAttribute("aria-label", "Toggle comic title");
-    titleButton.textContent = "Title";
-    titleButton.addEventListener("click", toggleTitle);
+    const titleButton = createToolbarButton({
+      title: "Toggle comic title (T)",
+      ariaLabel: "Toggle comic title",
+      text: "Title",
+      onClick: toggleTitle
+    });
 
-    const downloadButton = document.createElement("button");
-    downloadButton.type = "button";
-    downloadButton.title = "Download comic image (D)";
-    downloadButton.setAttribute("aria-label", "Download comic image");
-    downloadButton.textContent = "Download";
-    downloadButton.addEventListener("click", downloadComic);
+    const downloadButton = createToolbarButton({
+      title: "Download comic image (D)",
+      ariaLabel: "Download comic image",
+      text: "Download",
+      onClick: downloadComic
+    });
 
     [
       previousLink,
