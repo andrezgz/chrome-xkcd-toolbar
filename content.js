@@ -7,7 +7,8 @@
   const KEY_HANDLER_FLAG = "__xkcdToolbarKeyHandler";
 
   function isXkcdComicUrl(href) {
-    return /^https:\/\/(www\.)?xkcd\.com\/\d+\/?$/.test(href);
+    // The root path also counts: xkcd serves the latest comic there.
+    return /^https:\/\/(www\.)?xkcd\.com\/(\d+\/?)?$/.test(href);
   }
 
   function isXkcdComicPage() {
@@ -19,8 +20,18 @@
     return match ? Number(match[1]) : null;
   }
 
+  function permalinkComicNumber() {
+    // The root path has no comic number in the URL, but xkcd always prints
+    // a permanent link to the current comic inside #middleContainer.
+    const link = document.querySelector('#middleContainer a[href^="https://xkcd.com/"]');
+    if (!link) return null;
+
+    const match = link.getAttribute("href").match(/\/(\d+)\/?$/);
+    return match ? Number(match[1]) : null;
+  }
+
   function comicNumber() {
-    return parseComicNumber(location.pathname);
+    return parseComicNumber(location.pathname) ?? permalinkComicNumber();
   }
 
   function comicImage() {
@@ -327,6 +338,7 @@
       isXkcdComicUrl,
       isXkcdComicPage,
       parseComicNumber,
+      permalinkComicNumber,
       comicNumber,
       comicImage,
       extractTitle,

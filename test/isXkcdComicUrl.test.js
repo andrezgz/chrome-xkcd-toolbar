@@ -9,8 +9,12 @@ describe("isXkcdComicUrl", () => {
     expect(isXkcdComicUrl("https://www.xkcd.com/353")).toBe(true);
   });
 
-  test("rejects the home page", () => {
-    expect(isXkcdComicUrl("https://xkcd.com/")).toBe(false);
+  test("matches the home page (it serves the latest comic)", () => {
+    expect(isXkcdComicUrl("https://xkcd.com/")).toBe(true);
+  });
+
+  test("matches the www home page with no trailing slash", () => {
+    expect(isXkcdComicUrl("https://www.xkcd.com")).toBe(false);
   });
 
   test("rejects non-comic subpaths", () => {
