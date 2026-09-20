@@ -135,6 +135,13 @@
     document.head.appendChild(style);
   }
 
+  function createSeparator() {
+    const separator = document.createElement("span");
+    separator.className = "xkcd-separator";
+    separator.textContent = "|";
+    return separator;
+  }
+
   function createPanel(n) {
     document.getElementById(PANEL_ID)?.remove();
 
@@ -153,26 +160,14 @@
     previousLink.title = "Previous comic (←)";
     previousLink.textContent = "← Previous";
 
-    const separator1 = document.createElement("span");
-    separator1.className = "xkcd-separator";
-    separator1.textContent = "|";
-
     const numberBadge = document.createElement("span");
     numberBadge.className = "xkcd-number";
     numberBadge.textContent = `#${n}`;
-
-    const separator2 = document.createElement("span");
-    separator2.className = "xkcd-separator";
-    separator2.textContent = "|";
 
     const nextLink = document.createElement("a");
     nextLink.href = `https://xkcd.com/${next}/`;
     nextLink.title = "Next comic (→)";
     nextLink.textContent = "Next →";
-
-    const separator3 = document.createElement("span");
-    separator3.className = "xkcd-separator";
-    separator3.textContent = "|";
 
     const explainLink = document.createElement("a");
     explainLink.href = `https://www.explainxkcd.com/wiki/index.php/${n}`;
@@ -181,20 +176,12 @@
     explainLink.title = "Explain XKCD (E)";
     explainLink.textContent = "Explain";
 
-    const separator4 = document.createElement("span");
-    separator4.className = "xkcd-separator";
-    separator4.textContent = "|";
-
     const titleButton = document.createElement("button");
     titleButton.type = "button";
     titleButton.title = "Toggle comic title (T)";
     titleButton.setAttribute("aria-label", "Toggle comic title");
     titleButton.textContent = "Title";
     titleButton.addEventListener("click", toggleTitle);
-
-    const separator5 = document.createElement("span");
-    separator5.className = "xkcd-separator";
-    separator5.textContent = "|";
 
     const downloadButton = document.createElement("button");
     downloadButton.type = "button";
@@ -205,15 +192,15 @@
 
     [
       previousLink,
-      separator1,
+      createSeparator(),
       numberBadge,
-      separator2,
+      createSeparator(),
       nextLink,
-      separator3,
+      createSeparator(),
       explainLink,
-      separator4,
+      createSeparator(),
       titleButton,
-      separator5,
+      createSeparator(),
       downloadButton
     ].forEach(node => panel.appendChild(node));
 
