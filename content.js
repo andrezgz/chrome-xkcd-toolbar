@@ -67,7 +67,7 @@
   }
 
   function go(url) {
-    location.href = url;
+    location.assign(url);
   }
 
   function toggleTitle() {
