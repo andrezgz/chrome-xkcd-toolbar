@@ -142,6 +142,18 @@
     return separator;
   }
 
+  function createToolbarLink({ href, title, text, external = false }) {
+    const link = document.createElement("a");
+    link.href = href;
+    link.title = title;
+    link.textContent = text;
+    if (external) {
+      link.target = "_blank";
+      link.rel = "noopener";
+    }
+    return link;
+  }
+
   function createPanel(n) {
     document.getElementById(PANEL_ID)?.remove();
 
@@ -155,26 +167,28 @@
     const previous = Math.max(1, n - 1);
     const next = n + 1;
 
-    const previousLink = document.createElement("a");
-    previousLink.href = `https://xkcd.com/${previous}/`;
-    previousLink.title = "Previous comic (←)";
-    previousLink.textContent = "← Previous";
+    const previousLink = createToolbarLink({
+      href: `https://xkcd.com/${previous}/`,
+      title: "Previous comic (←)",
+      text: "← Previous"
+    });
 
     const numberBadge = document.createElement("span");
     numberBadge.className = "xkcd-number";
     numberBadge.textContent = `#${n}`;
 
-    const nextLink = document.createElement("a");
-    nextLink.href = `https://xkcd.com/${next}/`;
-    nextLink.title = "Next comic (→)";
-    nextLink.textContent = "Next →";
+    const nextLink = createToolbarLink({
+      href: `https://xkcd.com/${next}/`,
+      title: "Next comic (→)",
+      text: "Next →"
+    });
 
-    const explainLink = document.createElement("a");
-    explainLink.href = `https://www.explainxkcd.com/wiki/index.php/${n}`;
-    explainLink.target = "_blank";
-    explainLink.rel = "noopener";
-    explainLink.title = "Explain XKCD (E)";
-    explainLink.textContent = "Explain";
+    const explainLink = createToolbarLink({
+      href: `https://www.explainxkcd.com/wiki/index.php/${n}`,
+      title: "Explain XKCD (E)",
+      text: "Explain",
+      external: true
+    });
 
     const titleButton = document.createElement("button");
     titleButton.type = "button";
