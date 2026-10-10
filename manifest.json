@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "XKCD Toolbar",
-  "version": "1.2.2",
-  "description": "Navigation, go-to-comic, Explain XKCD, title toggle, and comic image download tools for xkcd.com.",
+  "version": "1.2.3",
+  "description": "Unofficial xkcd toolbar: keyboard navigation, jump to any comic, hover text toggle, Explain XKCD and clean-name image downloads.",
   "permissions": ["downloads"],
   "background": {
     "service_worker": "background.js"

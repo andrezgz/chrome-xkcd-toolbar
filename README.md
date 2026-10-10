@@ -1,6 +1,6 @@
 # XKCD Toolbar
 
-Chrome extension for xkcd.com.
+Unofficial Chrome toolbar for xkcd.com: browse with your keyboard, jump to any comic, toggle the hover text, open Explain XKCD, and download the image with a clean filename. No build step, no dependencies.
 
 ## Features
 
