@@ -39,3 +39,13 @@ npm install
 npm run lint
 npm test
 ```
+
+## Disclaimer
+
+This is an unofficial extension and is not affiliated with, endorsed by, or
+sponsored by xkcd or Randall Munroe. xkcd comics are licensed by their author
+under [CC BY-NC 2.5](https://xkcd.com/license.html).
+
+## License
+
+[MIT](LICENSE)

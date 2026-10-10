@@ -1,6 +1,7 @@
 {
   "name": "xkcd-toolbar",
   "version": "1.2.2",
+  "license": "MIT",
   "private": true,
   "scripts": {
     "lint": "eslint .",
