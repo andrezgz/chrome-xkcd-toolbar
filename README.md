@@ -24,13 +24,20 @@ Chrome extension for xkcd.com.
 
 ## Install
 
-1. Extract this ZIP.
-2. Open `chrome://extensions`.
-3. Enable **Developer mode**.
-4. Click **Load unpacked**.
-5. Select the extracted `xkcd-toolbar` folder.
+1. Clone this repository (or download it as a ZIP from GitHub and extract it):
 
-No build step or dependencies are required.
+   ```sh
+   git clone https://github.com/andrezgz/chrome-xkcd-toolbar.git
+   ```
+
+2. Open `chrome://extensions` in Chrome.
+3. Enable **Developer mode** (top-right toggle).
+4. Click **Load unpacked**.
+5. Select the cloned folder (the one containing `manifest.json`).
+6. Visit any comic on [xkcd.com](https://xkcd.com) and the toolbar will appear.
+
+No build step or dependencies are required. After pulling changes, click the
+reload icon on the extension's card in `chrome://extensions`.
 
 ## Development
 
