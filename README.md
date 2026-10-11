@@ -49,6 +49,15 @@ npm run lint
 npm test
 ```
 
+The extension icons in `icons/` are PNG renders of `icons/icon.svg`. To
+regenerate them after editing the SVG (requires ImageMagick):
+
+```sh
+for s in 16 48 128; do
+  convert -background none -density $((s*3)) icons/icon.svg -resize ${s}x${s} -depth 8 icons/icon$s.png
+done
+```
+
 ## Disclaimer
 
 This is an unofficial extension and is not affiliated with, endorsed by, or

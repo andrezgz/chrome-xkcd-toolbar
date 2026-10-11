@@ -1,8 +1,13 @@
 {
   "manifest_version": 3,
   "name": "XKCD Toolbar",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "description": "Unofficial xkcd toolbar: keyboard navigation, jump to any comic, hover text toggle, Explain XKCD and clean-name image downloads.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
   "permissions": ["downloads"],
   "background": {
     "service_worker": "background.js"
