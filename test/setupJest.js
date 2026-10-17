@@ -12,7 +12,8 @@ beforeEach(() => {
       sync: {
         get: jest.fn(defaults => Promise.resolve({ ...defaults })),
         set: jest.fn(() => Promise.resolve())
-      }
+      },
+      onChanged: { addListener: jest.fn() }
     }
   };
 

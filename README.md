@@ -1,8 +1,16 @@
 # XKCD Toolbar
 
-Unofficial Chrome toolbar for xkcd.com: browse with your keyboard, jump to any comic, toggle the hover text, open Explain XKCD, and download the image with a clean filename. No build step, no dependencies.
+Unofficial Chrome toolbar for xkcd.com: browse with your keyboard, jump to any comic, toggle the hover text, open Explain XKCD, download the image with a clean filename, and keep track of which comics you have read and which are your favorites. No build step, no dependencies.
 
-![XKCD Toolbar showing the Prev, comic number, Next, Explain, Title and Download controls](docs/toolbar.png)
+![XKCD Toolbar showing the Favs and Unread modes, Prev, the comic number with its read and favorite icons, Next, Explain, Title and Download controls](docs/toolbar.png)
+
+Panel layout:
+
+```text
+Favs  Unread | Prev | #353 ✓ ⭐ | Next | Explain | Title | Download
+```
+
+Favs and Unread switch the navigation mode (they change where Prev / Next lead), the ✓ and ⭐ next to the comic number are its read and favorite state. Favs, Unread, ✓ and ⭐ appear once your stored lists have loaded.
 
 ## Features
 
@@ -13,6 +21,18 @@ Unofficial Chrome toolbar for xkcd.com: browse with your keyboard, jump to any c
 - Open the Explain XKCD page
 - Download the comic image with format `xkcd-NUMBER-COMIC-NAME.EXT`
 - Jump to any comic number (click the comic number in the panel, or press G)
+
+### Read tracking and favorites
+
+- Opening a comic records it as read. The panel shows 👀 on the first visit and ✓ on later ones
+- Click the icon (or press U) to mark the comic as unread (✗): it is removed from your history and shows 👀 again the next time you open it. Click again to mark it as read
+- Favorites: ☆ / ⭐ next to the comic number, toggled by clicking or pressing F
+- Navigation modes: Shift+F makes the arrow keys (and Prev / Next) jump between your favorites, Shift+U between unread comics. The Favs / Unread buttons at the start of the panel show which mode is on. The mode is per tab; press Esc or the same shortcut to leave it
+- Import your reading history with Shift+I (see below)
+
+Both lists are stored with `chrome.storage.sync`, so they follow your Chrome
+profile, and several open tabs keep each other's changes instead of overwriting
+them.
 
 ### Keyboard shortcuts
 
@@ -25,6 +45,31 @@ Unofficial Chrome toolbar for xkcd.com: browse with your keyboard, jump to any c
 - E: Explain XKCD
 - D: Download comic
 - G: Go to comic number
+- F: Add / remove favorite
+- U: Mark as unread / read
+- Shift+F: Favorites navigation mode (arrows jump between favorites)
+- Shift+U: Unread navigation mode (arrows jump between unread comics)
+- Shift+I: Import read comics
+- Esc: Leave the navigation mode (or close the import dialog)
+
+### Importing your reading history
+
+Press Shift+I and enter the comics you have already read, one range per line,
+both ends included (`a-b`, `a..b` or a single number):
+
+```text
+1-117
+160..190
+```
+
+Importing replaces the whole read history: every comic outside the ranges
+becomes unread. Favorites are not touched.
+
+## Permissions and data
+
+- `downloads`: save the comic image with a clean filename
+- `storage`: remember the pinned hover text, your read history and your favorites (`chrome.storage.sync`)
+- The extension only runs on `xkcd.com` and `www.xkcd.com`. Besides the page itself it requests neighbouring comic pages (to prefetch their images) and `/info.0.json` (to know the latest comic number in unread mode) from the same site. Nothing is sent anywhere else
 
 ## Install
 
