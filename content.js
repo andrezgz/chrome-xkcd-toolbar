@@ -92,6 +92,53 @@
     });
   }
 
+  // Previous and next comic numbers worth prefetching: comic 1 has no
+  // previous one.
+  function adjacentComicNumbers(n) {
+    return [n - 1, n + 1].filter(m => m >= 1);
+  }
+
+  // Reads the comic image's src/srcset out of a fetched comic page.
+  function extractComicImageSource(doc) {
+    const img = doc.querySelector("#comic img");
+    const src = img?.getAttribute("src");
+    if (!src) return null;
+
+    return { src, srcset: img.getAttribute("srcset") };
+  }
+
+  // Warms the HTTP cache with a native preload hint. Reusing the page's own
+  // src/srcset lets the browser pick the same 1x/2x candidate it will request
+  // on navigation.
+  function preloadComicImage({ src, srcset }) {
+    const link = document.createElement("link");
+    link.rel = "preload";
+    link.setAttribute("as", "image");
+    link.href = src;
+    if (srcset) link.setAttribute("imagesrcset", srcset);
+    document.head.appendChild(link);
+    return link;
+  }
+
+  async function prefetchComic(n) {
+    try {
+      const response = await fetch(`https://xkcd.com/${n}/`);
+      // The page after the latest comic does not exist.
+      if (!response.ok) return;
+
+      const html = await response.text();
+      const doc = new DOMParser().parseFromString(html, "text/html");
+      const source = extractComicImageSource(doc);
+      if (source) preloadComicImage(source);
+    } catch {
+      // Prefetching is only an optimization: ignore any failure.
+    }
+  }
+
+  function prefetchAdjacentComics(n) {
+    return Promise.all(adjacentComicNumbers(n).map(prefetchComic));
+  }
+
   function go(url) {
     location.assign(url);
   }
@@ -422,6 +469,7 @@
     createPanel(n);
     installKeyboardNavigation();
     loadTitlePinned();
+    prefetchAdjacentComics(n);
   }
 
   if (typeof module !== "undefined" && module.exports) {
@@ -438,6 +486,10 @@
       comicName,
       slugify,
       downloadComic,
+      adjacentComicNumbers,
+      extractComicImageSource,
+      preloadComicImage,
+      prefetchAdjacentComics,
       parseTargetComicNumber,
       goToComic,
       toggleTitle,

@@ -7,7 +7,7 @@ Unofficial Chrome toolbar for xkcd.com: browse with your keyboard, jump to any c
 ## Features
 
 - Automatically runs on XKCD comic pages
-- Previous / Next navigation
+- Previous / Next navigation, with the neighbouring comics prefetched in the background so flipping through them feels instant
 - Toggle the comic's hover text (the image's title attribute) below the image
 - Pin the hover text so it is shown automatically on every comic (Shift+T); the Title button is highlighted while pinned and the choice is remembered, and synced across your Chrome profile
 - Open the Explain XKCD page
