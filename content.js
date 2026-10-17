@@ -4,6 +4,8 @@
   const PANEL_ID = "xkcd-toolbar-panel";
   const STYLE_ID = "xkcd-toolbar-style";
   const TITLE_ID = "xkcd-toolbar-title";
+  const TITLE_BUTTON_CLASS = "xkcd-title-button";
+  const PIN_TITLE_KEY = "pinTitle";
   const KEY_HANDLER_FLAG = "__xkcdToolbarKeyHandler";
 
   function isXkcdComicUrl(href) {
@@ -110,12 +112,8 @@
     go(`https://xkcd.com/${n}/`);
   }
 
-  function toggleTitle() {
-    const existing = document.getElementById(TITLE_ID);
-    if (existing) {
-      existing.remove();
-      return;
-    }
+  function showTitle() {
+    if (document.getElementById(TITLE_ID)) return;
 
     const img = comicImage();
     const title = comicTitle();
@@ -125,6 +123,44 @@
     titleEl.id = TITLE_ID;
     titleEl.textContent = title;
     img.insertAdjacentElement("afterend", titleEl);
+  }
+
+  function toggleTitle() {
+    const existing = document.getElementById(TITLE_ID);
+    if (existing) {
+      existing.remove();
+      return;
+    }
+
+    showTitle();
+  }
+
+  // Whether the hover text is shown automatically on every comic. Persisted
+  // in chrome.storage.sync so it survives navigation and syncs across devices.
+  let titlePinned = false;
+
+  function renderPinState() {
+    const button = document.querySelector(`#${PANEL_ID} .${TITLE_BUTTON_CLASS}`);
+    button?.setAttribute("aria-pressed", String(titlePinned));
+  }
+
+  async function loadTitlePinned() {
+    try {
+      const stored = await chrome.storage.sync.get({ [PIN_TITLE_KEY]: false });
+      titlePinned = stored[PIN_TITLE_KEY] === true;
+    } catch {
+      // Storage unavailable: the toolbar still works, just without the pin.
+      return;
+    }
+    renderPinState();
+    if (titlePinned) showTitle();
+  }
+
+  function toggleTitlePinned() {
+    titlePinned = !titlePinned;
+    chrome.storage.sync.set({ [PIN_TITLE_KEY]: titlePinned });
+    renderPinState();
+    if (titlePinned) showTitle();
   }
 
   function addStyles() {
@@ -173,6 +209,11 @@
 
       #${PANEL_ID} .xkcd-separator {
         color: #777;
+      }
+
+      #${PANEL_ID} button[aria-pressed="true"] {
+        background: #ffe680;
+        box-shadow: 0 0 0 3px #ffe680;
       }
 
       #${TITLE_ID} {
@@ -255,11 +296,13 @@
     });
 
     const titleButton = createToolbarButton({
-      title: "Toggle comic title (T)",
+      title: "Toggle comic title (T), always show it (Shift+T)",
       ariaLabel: "Toggle comic title",
       text: "Title",
       onClick: toggleTitle
     });
+    titleButton.className = TITLE_BUTTON_CLASS;
+    titleButton.setAttribute("aria-pressed", String(titlePinned));
 
     const downloadButton = createToolbarButton({
       title: "Download comic image (D)",
@@ -296,7 +339,7 @@
         event.metaKey ||
         event.ctrlKey ||
         event.altKey ||
-        event.shiftKey ||
+        (event.shiftKey && event.key !== "T") ||
         target instanceof HTMLInputElement ||
         target instanceof HTMLTextAreaElement ||
         target instanceof HTMLSelectElement ||
@@ -346,9 +389,18 @@
           break;
 
         case "t":
-        case "T":
           event.preventDefault();
           toggleTitle();
+          break;
+
+        case "T":
+          event.preventDefault();
+          // Caps Lock yields "T" without Shift: keep it as a plain toggle.
+          if (event.shiftKey) {
+            toggleTitlePinned();
+          } else {
+            toggleTitle();
+          }
           break;
 
         case "g":
@@ -369,6 +421,7 @@
     addStyles();
     createPanel(n);
     installKeyboardNavigation();
+    loadTitlePinned();
   }
 
   if (typeof module !== "undefined" && module.exports) {
@@ -388,6 +441,8 @@
       parseTargetComicNumber,
       goToComic,
       toggleTitle,
+      loadTitlePinned,
+      toggleTitlePinned,
       createPanel,
       installKeyboardNavigation,
       init

@@ -44,6 +44,25 @@ describe("installKeyboardNavigation", () => {
     expect(document.getElementById("xkcd-toolbar-title")).not.toBeNull();
   });
 
+  test("Shift+T pins the title and persists the preference", () => {
+    document.body.innerHTML = '<div id="comic"><img src="/x.png" title="joke"></div>';
+    press("T", { shiftKey: true });
+    expect(document.getElementById("xkcd-toolbar-title")).not.toBeNull();
+    expect(chrome.storage.sync.set).toHaveBeenCalledWith({ pinTitle: true });
+  });
+
+  test("Caps Lock T (no Shift) is a plain toggle, not a pin", () => {
+    document.body.innerHTML = '<div id="comic"><img src="/x.png" title="joke"></div>';
+    press("T");
+    expect(document.getElementById("xkcd-toolbar-title")).not.toBeNull();
+    expect(chrome.storage.sync.set).not.toHaveBeenCalled();
+  });
+
+  test("other Shift combinations are still ignored", () => {
+    press("E", { shiftKey: true });
+    expect(openSpy).not.toHaveBeenCalled();
+  });
+
   test("ignores the key when a modifier is held", () => {
     press("e", { ctrlKey: true });
     expect(openSpy).not.toHaveBeenCalled();

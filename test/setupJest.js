@@ -7,6 +7,12 @@ beforeEach(() => {
     },
     downloads: {
       download: jest.fn()
+    },
+    storage: {
+      sync: {
+        get: jest.fn(defaults => Promise.resolve({ ...defaults })),
+        set: jest.fn(() => Promise.resolve())
+      }
     }
   };
 

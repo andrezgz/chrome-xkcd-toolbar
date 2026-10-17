@@ -9,6 +9,7 @@ Unofficial Chrome toolbar for xkcd.com: browse with your keyboard, jump to any c
 - Automatically runs on XKCD comic pages
 - Previous / Next navigation
 - Toggle the comic's hover text (the image's title attribute) below the image
+- Pin the hover text so it is shown automatically on every comic (Shift+T); the Title button is highlighted while pinned and the choice is remembered, and synced across your Chrome profile
 - Open the Explain XKCD page
 - Download the comic image with format `xkcd-NUMBER-COMIC-NAME.EXT`
 - Jump to any comic number (click the comic number in the panel, or press G)
@@ -20,6 +21,7 @@ Unofficial Chrome toolbar for xkcd.com: browse with your keyboard, jump to any c
 - Home: first comic
 - End: latest comic
 - T: Toggle comic title
+- Shift+T: Pin / unpin the comic title (always show it)
 - E: Explain XKCD
 - D: Download comic
 - G: Go to comic number
